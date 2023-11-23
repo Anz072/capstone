@@ -1,22 +1,14 @@
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./components/routes/home/home.componenet";
-
-const Navigation = () => {
-  return (
-    <div>
-      <div>
-        <h1> Nav Bar</h1>
-      </div>
-      <Outlet />
-    </div>
-  );
-};
+import Navigation from "./components/routes/navigation/navigation.component";
+import SignIn from "./components/routes/sign-in/sign-in.component";
 
 const App = () => {
-  return (
+  return ( 
     <Routes>
       <Route path="/" element={<Navigation />}>
         <Route index element={<Home />} />
+        <Route path='login' element={<SignIn />} />
       </Route>
     </Routes>
   );
