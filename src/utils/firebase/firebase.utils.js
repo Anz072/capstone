@@ -5,6 +5,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
 } from "firebase/auth";
 
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -20,7 +22,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
@@ -28,6 +30,15 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log('user is logged in')
+    } else {
+        console.log('user is not logged in')
+    }
+  });
+
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () =>
@@ -53,7 +64,7 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInfo) => {
         displayName,
         email,
         createdAt,
-        ...additionalInfo
+        ...additionalInfo,
       });
     } catch (err) {
       console.log("Creation of user failed");
@@ -66,4 +77,21 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInfo) => {
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
   return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const signUserIn = (email, password) => {
+    return new Promise((resolve, reject) => {
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log(user);
+            resolve(user);
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+            reject(errorCode);
+          });
+      });
 };
