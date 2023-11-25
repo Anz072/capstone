@@ -6,13 +6,13 @@ import Shop from "./components/routes/shop/shop.component";
 import Cart from "./components/routes/cart/cart.component";
 
 const App = () => {
-  return ( 
+  return (
     <Routes>
       <Route path="/" element={<Navigation />}>
         <Route index element={<Home />} />
-        <Route path='auth' element={<SignIn />} />
-        <Route path='shop' element={<Shop />} />
-        <Route path='cart' element={<Cart />} />
+        <Route path="auth" element={<SignIn />} />
+        <Route path="shop/*" element={<Shop />} />
+        <Route path="cart" element={<Cart />} />
       </Route>
     </Routes>
   );

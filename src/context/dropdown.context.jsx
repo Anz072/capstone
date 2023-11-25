@@ -67,6 +67,16 @@ export const DropdownContextProvider = ({ children }) => {
     setItemsTotalPrice(completePrice);
   }, [cartItems]);
 
+  useEffect(() => {
+    const completePrice = cartItems.reduce(
+      (total, item) => total + item.quantity * item.price,
+      0
+    );
+
+    setItemsTotalPrice(completePrice);
+  }, [cartItems]);
+
+
   const addItemToCart = (productToAdd) => {
     setCartItems(addCartItem(cartItems, productToAdd));
   };

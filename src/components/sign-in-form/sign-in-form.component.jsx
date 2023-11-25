@@ -1,5 +1,6 @@
-import Button from "../button/button.componenet";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.componenet";
 import FormInput from "../form-input/form-input.component";
+
 import {
   signInWithGooglePopup,
   signUserIn,
@@ -72,7 +73,7 @@ const SignInForm = () => {
         />
         <div style={{ display: "flex", gap: 10 }}>
           <Button type="submit">Log In</Button>
-          <Button type="button" onClick={logGoogleUser} buttonType={"google"}>
+          <Button type="button" onClick={logGoogleUser} buttonType={BUTTON_TYPE_CLASSES.google}>
             SignIn
           </Button>
         </div>
