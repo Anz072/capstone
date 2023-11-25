@@ -6,7 +6,8 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -31,13 +32,9 @@ googleProvider.setCustomParameters({
 
 export const auth = getAuth();
 
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        console.log('user is logged in')
-    } else {
-        console.log('user is not logged in')
-    }
-  });
+export const onAuthStateChangedListener = (callback) => {
+  onAuthStateChanged(auth, callback);
+};
 
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
@@ -80,18 +77,20 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
 };
 
 export const signUserIn = (email, password) => {
-    return new Promise((resolve, reject) => {
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            console.log(user);
-            resolve(user);
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-            reject(errorCode);
-          });
+  return new Promise((resolve, reject) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        resolve(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        reject(errorCode);
       });
+  });
 };
+
+export const signUserOut = async () => await signOut(auth);

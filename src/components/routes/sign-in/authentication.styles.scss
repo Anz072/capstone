@@ -1,12 +1,8 @@
 .authContainer {
-  .authContainerInner {
-    display: "flex";
-    justify-content: "center";
-    div {
-      display: "flex";
-      justify-content: "space-around";
-      width: "960px";
-      flex-wrap: "wrap";
-    }
+    .authContainerInner {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 25px
   }
 }

@@ -1,4 +1,3 @@
-import { initializeApp } from "firebase/app";
 import Button from "../componentsMain/button/button.componenet";
 import FormInput from "../componentsMain/form-input/form-input.component";
 import {
@@ -6,7 +5,7 @@ import {
   createUserDocumentFromAuth,
   signUserIn,
 } from "../../utils/firebase/firebase.utils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const defFormFields = {
   email: "",
@@ -17,7 +16,6 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defFormFields);
   const { email, passowrd } = formFields;
 
-  useEffect(() => {}, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -49,8 +47,8 @@ const SignInForm = () => {
 
   const logGoogleUser = async (event) => {
     event.preventDefault();
-    const { user } = await signInWithGooglePopup();
-    const userDocRef = await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
+
   };
 
   return (
