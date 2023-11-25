@@ -1,8 +1,7 @@
-import Button from "../componentsMain/button/button.componenet";
-import FormInput from "../componentsMain/form-input/form-input.component";
+import Button from "../button/button.componenet";
+import FormInput from "../form-input/form-input.component";
 import {
   signInWithGooglePopup,
-  createUserDocumentFromAuth,
   signUserIn,
 } from "../../utils/firebase/firebase.utils";
 import { useState } from "react";
@@ -48,7 +47,6 @@ const SignInForm = () => {
   const logGoogleUser = async (event) => {
     event.preventDefault();
     await signInWithGooglePopup();
-
   };
 
   return (

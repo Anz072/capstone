@@ -5,13 +5,19 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/user.context";
+import { ProductContextProvider } from "./context/products.context";
+import { DropdownContextProvider } from "./context/dropdown.context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <App />
+        <ProductContextProvider>
+          <DropdownContextProvider>
+            <App />
+          </DropdownContextProvider>
+        </ProductContextProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>
