@@ -1,9 +1,13 @@
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./cart-item-checkout.styles.scss";
-import { DropdownContext } from "../../context/dropdown.context";
+import { selectCartItems } from "../../store/cart/cart.selector";
+import { addItemToCart, clearItemFromCart, removeItemFromCart } from "../../store/cart/cart.action";
 
 const CartItemCheckout = ({ item }) => {
-  const { addItemToCart, removeItemFromCart, removeItemCompletely } = useContext(DropdownContext);
+  // const { addItemToCart, removeItemFromCart, removeItemCompletely } = useContext(DropdownContext);
+  const cartItems = useSelector(selectCartItems)
+  const dispatch = useDispatch();
+
   return (
     <div className="checkout-item-container">
       <img
@@ -15,7 +19,7 @@ const CartItemCheckout = ({ item }) => {
       <span className="quantity">
         <button
           onClick={() => {
-            removeItemFromCart(item);
+            dispatch(removeItemFromCart(cartItems,item));
           }}
         >
           less
@@ -23,14 +27,14 @@ const CartItemCheckout = ({ item }) => {
         <span className="value">{item.quantity}</span>
         <button
           onClick={() => {
-            addItemToCart(item);
+            dispatch(addItemToCart(cartItems,item));
           }}
         >
           more
         </button>
       </span>
       <span className="price"> ${item.price}</span>
-      <button onClick={()=>{removeItemCompletely(item)}}>X</button>
+      <button onClick={()=>{dispatch(clearItemFromCart(cartItems,item))}}>X</button>
     </div>
   );
 };

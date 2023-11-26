@@ -5,12 +5,19 @@ import {
 } from "./cart-dropdown.styles";
 import Button from "../button/button.componenet";
 import CartItem from "../cart-item/cart-item.component";
-import { useContext } from "react";
-import { DropdownContext } from "../../context/dropdown.context";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCartItems, selectIsCartOpen } from "../../store/cart/cart.selector";
+import { setIsCartOpen } from "../../store/cart/cart.action";
 
 const CartDropdown = () => {
-  const { cartItems, opened, setOpened } = useContext(DropdownContext);
+  // const { cartItems, opened, setOpened } = useContext(DropdownContext);
+
+  const cartItems = useSelector(selectCartItems);
+  const dispatch = useDispatch();
+  const isCartOpen = useSelector(selectIsCartOpen);
+
+  const toggleIsCartOpen = () => dispatch(setIsCartOpen(!isCartOpen));
 
   return (
     <CartDropdownContainer>
@@ -25,9 +32,7 @@ const CartDropdown = () => {
       </CartItems>
       <Link className="nav-link" to="/cart">
         <Button
-          onClick={() => {
-            setOpened(!opened);
-          }}
+          onClick={toggleIsCartOpen}
         >
           Go to checkout
         </Button>
